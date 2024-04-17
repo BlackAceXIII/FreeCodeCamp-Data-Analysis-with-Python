@@ -18,15 +18,15 @@ df2['gluc'] = df2['gluc'].replace([1, 2, 3], [0, 1, 1])
 # Draw Categorical Plot
 def draw_cat_plot():
     # Create DataFrame for cat plot using `pd.melt` using just the values from 'cholesterol', 'gluc', 'smoke', 'alco', 'active', and 'overweight'.
-    df_cat = pd.melt(df2, id_vars = ['cardio'], value_vars = ['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
+    df2_cat_plot = pd.melt(df2, id_vars = ['cardio'], value_vars = ['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
 
 
     # Group and reformat the data to split it by 'cardio'. Show the counts of each feature. You will have to rename one of the columns for the catplot to work correctly.
-    df_cat = pd.DataFrame(df_cat.groupby(['cardio', 'variable', 'value']).size().reset_index(name='total'))
+    df2_cat_plot_2 = pd.DataFrame(df2_cat_plot.groupby(['cardio', 'variable', 'value']).size().reset_index(name='total'))
 
 
     # Draw the catplot with 'sns.catplot()'
-    catplot = sns.catplot(x='variable', y='total', hue='value', col='cardio', data=df_cat, kind='bar')
+    catplot = sns.catplot(x='variable', y='total', hue='value', col='cardio', data=df2_cat_plot, kind='bar')
 
 
     # Get the figure for the output
@@ -41,14 +41,14 @@ def draw_cat_plot():
 # Draw Heat Map
 def draw_heat_map():
     # Clean the data
-    df_heat = df2[(df2['ap_lo'] <= df2['ap_hi'])
+    df2_heat_map = df2[(df2['ap_lo'] <= df2['ap_hi'])
     & (df2['height'] >= df2['height'].quantile(0.025))
     & (df2['height'] <= df2['height'].quantile(0.975))
     & (df2['weight'] >= df2['weight'].quantile(0.025))
     & (df2['weight'] <= df2['weight'].quantile(0.975))]
 
     # Calculate the correlation matrix
-    corr = df_heat.corr()
+    corr = df2_heat_map.corr()
 
     # Generate a mask for the upper triangle
     mask = np.zeros_like(corr)
