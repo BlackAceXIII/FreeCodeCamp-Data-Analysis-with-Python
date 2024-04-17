@@ -11,16 +11,16 @@ def draw_plot():
     plt.scatter(df4['Year'], df4['CSIRO Adjusted Sea Level'], s=8, marker='D', color='b')
 
     # Create first line of best fit
-    res1 = linregress(df4['Year'], df4['CSIRO Adjusted Sea Level'])
+    line1 = linregress(df4['Year'], df4['CSIRO Adjusted Sea Level'])
     x1 = np.arange(df4['Year'].min(), 2051, 1)
-    y1 = res1.intercept + res1.slope*x1
+    y1 = line1.intercept + line1.slope*x1
     plt.plot(x1,y1,color='firebrick')
 
     # Create second line of best fit
     df5 = df4[df4['Year']>=2000]
-    res2 = linregress(df5['Year'], df5['CSIRO Adjusted Sea Level'])
+    line2 = linregress(df5['Year'], df5['CSIRO Adjusted Sea Level'])
     x2 = np.arange(df5['Year'].min(), 2051, 1)
-    y2 = res2.intercept + res2.slope*x2
+    y2 = line2.intercept + line2.slope*x2
     plt.plot(x2,y2,color='mediumseagreen')
 
     # Add labels and title
