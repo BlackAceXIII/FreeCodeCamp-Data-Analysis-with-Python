@@ -25,16 +25,16 @@ def draw_line_plot():
 
 def draw_bar_plot():
     # Copy and modify data for monthly bar plot
-    df_bar = df3.copy(deep=True)
-    df_bar['year'] = df_bar.index.year
+    df3_bar = df3.copy(deep=True)
+    df3_bar['year'] = df3_bar.index.year
     months = ["January", "February", "March", "April", "May", "June", "July", "August",
               "September", "October", "November", "December"]
-    df_bar['month'] = df_bar.index.month_name()
-    df_bar['month'] = pd.Categorical(df_bar['month'], categories=months)
-    df_bar_pivot = pd.pivot_table(df_bar,values="value",index="year",columns="month",aggfunc=np.mean)
+    df3_bar['month'] = df3_bar.index.month_name()
+    df3_bar['month'] = pd.Categorical(df3_bar['month'], categories=months)
+    df3_bar_pivot = pd.pivot_table(df3_bar,values="value",index="year",columns="month",aggfunc=np.mean)
 
     # Draw bar plot
-    fig = df_bar_pivot.plot(kind='bar').get_figure()
+    fig = df3_bar_pivot.plot(kind='bar').get_figure()
     fig.set_figheight(6)
     fig.set_figwidth(8)
     plt.xlabel('Years')
@@ -46,23 +46,23 @@ def draw_bar_plot():
 
 def draw_box_plot():
     # Prepare data for box plots (this part is done!)
-    df_box = df3.copy()
-    df_box.reset_index(inplace=True)
-    df_box['year'] = [d.year for d in df_box.date]
-    df_box['month'] = [d.strftime('%b') for d in df_box.date]
+    df3_box = df3.copy()
+    df3_box.reset_index(inplace=True)
+    df3_box['year'] = [d.year for d in df3_box.date]
+    df3_box['month'] = [d.strftime('%b') for d in df3_box.date]
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
               "Sep", "Oct", "Nov", "Dec"]
-    df_box['month'] = pd.Categorical(df_box['month'], categories=months)
+    df3_box['month'] = pd.Categorical(df3_box['month'], categories=months)
 
     # Draw box plots (using Seaborn)
     fig, ax = plt.subplots(1,2,figsize=(18,6))
     plt.subplot(1, 2, 1)
-    sns.boxplot(x=df_box['year'], y=df_box['value']).get_figure()
+    sns.boxplot(x=df3_box['year'], y=df3_box['value']).get_figure()
     plt.title('Year-wise Box Plot (Trend)')
     plt.xlabel('Year')
     plt.ylabel('Page Views')
     plt.subplot(1, 2, 2)
-    sns.boxplot(x=df_box['month'], y=df_box['value']).get_figure()
+    sns.boxplot(x=df3_box['month'], y=df3_box['value']).get_figure()
     plt.title('Month-wise Box Plot (Seasonality)')
     plt.xlabel('Month')
     plt.ylabel('Page Views')
